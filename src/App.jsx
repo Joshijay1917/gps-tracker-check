@@ -129,9 +129,10 @@ function App() {
             <p>{track.latitude}</p>
           </div>
         </div>
-        <div className='flex justify-center my-5 text-2xl'>
+        <div className='flex justify-center my-5 text-xl'>
           <p>Distance=</p>
           <p>{distance}</p>
+          <p>meters</p>
         </div>
       </div>
     </div>
