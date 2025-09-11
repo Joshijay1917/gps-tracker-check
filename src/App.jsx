@@ -56,9 +56,10 @@ function App() {
 
   const startTrack = () => {
     counter()
-    setInterval(() => {
-      navigator.geolocation.getCurrentPosition(updatePostion)
-    }, 5000);
+    navigator.geolocation.watchPosition(updatePostion, 
+  (err) => console.error(err), 
+  { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
+);
   }
 
   const updatePostion = (position) => {
