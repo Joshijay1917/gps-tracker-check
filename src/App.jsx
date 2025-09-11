@@ -65,7 +65,7 @@ function App() {
     const accu = position.coords.accuracy
     const leti = position.coords.latitude
     const long = position.coords.longitude
-    const dis = calculateDistance(room.latitude, room.longitude, leti, long)
+    const dis = calculateDistance(room.latitude, room.logitude, leti, long)
     setDistance(dis)
     settrack({
       accurecy: accu,
