@@ -8,6 +8,7 @@ function App() {
   const [updateIn, setupdateIn] = useState(5)
   const [distance, setDistance] = useState(0)
   const [allowed, setallowed] = useState(false)
+  const [loading, setloading] = useState(false)
   const [room, setroom] = useState({
     accurecy: '',
     logitude: '',
@@ -24,6 +25,7 @@ function App() {
   }, [])
 
   const checkIp = async () => {
+    setloading(true)
     try {
       const data = await fetch('https://check-ip-test-backend.onrender.com/api/v1/check-ip')
       const res = await data.json()
@@ -36,6 +38,7 @@ function App() {
         }
       }
       
+      setloading(false)
     } catch (error) {
       console.log("Failed ", error);
     }
@@ -172,6 +175,7 @@ function App() {
         </div>
       <div>
         <h2 className='text-xl'>Access to Website</h2>
+        {loading ? <p className='bg-yellow-300'>Loading...</p> : <></>}
         {allowed ? <p className='bg-green-300'>Allowed</p> : <p className='bg-red-300'>Not Allowed</p>}
       </div>
       </div>
