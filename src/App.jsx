@@ -37,7 +37,7 @@ function App() {
           setallowed(false)
         }
       }
-      
+      console.log("res : ", res);
       setloading(false)
     } catch (error) {
       console.log("Failed ", error);
