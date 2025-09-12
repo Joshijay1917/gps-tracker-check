@@ -25,7 +25,7 @@ function App() {
 
   const checkIp = async () => {
     try {
-      const data = await fetch('http://localhost:3000/api/v1/check-ip')
+      const data = await fetch('https://check-ip-test-backend.onrender.com/api/v1/check-ip')
       const res = await data.json()
 
       if(res) {
