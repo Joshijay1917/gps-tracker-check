@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -7,6 +7,7 @@ function App() {
   const [status, setstatus] = useState({ type: "bg-yellow-200", msg: "Click on set location of room" })
   const [updateIn, setupdateIn] = useState(5)
   const [distance, setDistance] = useState(0)
+  const [allowed, setallowed] = useState(false)
   const [room, setroom] = useState({
     accurecy: '',
     logitude: '',
@@ -17,6 +18,28 @@ function App() {
     logitude: '',
     latitude: ''
   })
+
+  useEffect(() => {
+    checkIp();
+  }, [])
+
+  const checkIp = async () => {
+    try {
+      const data = await fetch('http://localhost:3000/api/v1/check-ip')
+      const res = await data.json()
+
+      if(res) {
+        if(res.access) {
+          setallowed(true)
+        } else {
+          setallowed(false)
+        }
+      }
+      
+    } catch (error) {
+      console.log("Failed ", error);
+    }
+  }
 
   function toRad(x) {
       return (x * Math.PI) / 180;
@@ -94,7 +117,7 @@ function App() {
     if (!navigator.geolocation.getCurrentPosition(getPosition)) {
       setstatus({
         type: "bg-red-200",
-        msg: "User not allowed to access GPS"
+        msg: "Wait...."
       })
       return;
     }
@@ -147,6 +170,10 @@ function App() {
           <p>{distance}</p>
           <p>meters</p>
         </div>
+      <div>
+        <h2 className='text-xl'>Access to Website</h2>
+        {allowed ? <p className='bg-green-300'>Allowed</p> : <p className='bg-red-300'>Not Allowed</p>}
+      </div>
       </div>
     </div>
   )
