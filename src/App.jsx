@@ -13,14 +13,7 @@ function App() {
         navigate('/dash')
         return;
       }
-<<<<<<< HEAD
       navigate('/user')
-=======
-      console.log("res : ", res);
-      setloading(false)
-    } catch (error) {
-      console.log("Failed ", error);
->>>>>>> 7d506e633461a22037eb28ff6f1f362340610eb6
     }
   }, [user])
   
