@@ -18,7 +18,7 @@ const QRCode = () => {
             })
         }, 1000);
         interval = setInterval(() => {
-            setsessionId({ sessionId: uuidv4() })
+            setsessionId(uuidv4())
         }, 20000);
     }, [])
 

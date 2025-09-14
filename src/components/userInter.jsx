@@ -6,10 +6,11 @@ const userInterface = () => {
     const [loading, setloading] = useState(false)
 
     const handleChange = async (data) => {
+      console.dir(data[0].rawValue);
       if(data) {
         setloading(data.sessionId)
+        return;
       }
-      console.log("data ", data);
       setloading(data)
     }
 

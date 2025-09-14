@@ -1,33 +1,31 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { useNavigate } from 'react-router-dom'
-import { SignedOut, SignIn, SignInButton, UserButton, useUser } from '@clerk/clerk-react'
 
 function App() {
-  const { user } = useUser()
+  const [user, setuser] = useState(null)
   const navigate = useNavigate()
+  
+  const handleChange = (e) => {
+    setuser(e.target.value)
+  }
 
-  useEffect(() => {
+  const login = () => {
     if(user) {
-      if(user.username === 'admin') {
+      if(user === 'admin') {
         navigate('/dash')
         return;
       }
       navigate('/user')
     }
-  }, [user])
-  
-  
+  }
 
   return (
-    <header>
-      <SignedOut>
-        {/* <SignInButton /> */}
-      </SignedOut>
-      {/* <SignIn> */}
-        {/* <UserButton /> */}
-      {/* </SignIn> */}
-    </header>
+    <div className='shadow-2xl p-5 rounded-2xl'>
+      <h1>Login</h1>
+      <input className='bg-gray-200 p-3 rounded-2xl m-3' onChange={handleChange}/>
+      <button onClick={login} className='bg-blue-400 text-white text-xl'>Login</button>
+    </div>
   )
 }
 
