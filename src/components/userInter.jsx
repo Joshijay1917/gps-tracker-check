@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import QrReader from 'react-qr-scanner'
+import QrReader from './node_modules/react-qr-scanner/dist/react-qr-scanner.cjs.js'
 
 const userInterface = () => {
     const [file, setfile] = useState(null)
