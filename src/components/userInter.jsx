@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import QrReader from './node_modules/react-qr-scanner/dist/react-qr-scanner.cjs.js'
+import { Scanner } from '@yudiel/react-qr-scanner'
 
 const userInterface = () => {
     const [file, setfile] = useState(null)
@@ -10,6 +10,7 @@ const userInterface = () => {
         setloading(data.sessionId)
       }
       console.log("data ", data);
+      setloading(data)
     }
 
     const error = (err) => {
@@ -21,8 +22,7 @@ const userInterface = () => {
         <img className='w-1/2 h-1/2 m-auto' src="camera.avif" alt="" />
         </label>
         <input id='fileInput' className='hidden' type="file" accept="image/*" capture="environment" /> */}
-        <QrReader 
-        onError={error}
+        <Scanner 
         onScan={handleChange}
         />
         {loading && <div className='bg-black/50 fixed left-0 top-0 w-full min-h-screen flex justify-center items-center text-white font-bold text-3xl'>
