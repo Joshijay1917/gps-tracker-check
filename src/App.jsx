@@ -1,185 +1,33 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect } from 'react'
 import './App.css'
+import { useNavigate } from 'react-router-dom'
+import { SignedOut, SignIn, SignInButton, UserButton, useUser } from '@clerk/clerk-react'
 
 function App() {
-  const [status, setstatus] = useState({ type: "bg-yellow-200", msg: "Click on set location of room" })
-  const [updateIn, setupdateIn] = useState(5)
-  const [distance, setDistance] = useState(0)
-  const [allowed, setallowed] = useState(false)
-  const [loading, setloading] = useState(false)
-  const [room, setroom] = useState({
-    accurecy: '',
-    logitude: '',
-    latitude: ''
-  })
-  const [track, settrack] = useState({
-    accurecy: '',
-    logitude: '',
-    latitude: ''
-  })
+  const { user } = useUser()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    checkIp();
-  }, [])
-
-  const checkIp = async () => {
-    setloading(true)
-    try {
-      const data = await fetch('https://check-ip-test-backend.onrender.com/api/v1/check-ip')
-      const res = await data.json()
-
-      if(res) {
-        if(res.access) {
-          setallowed(true)
-        } else {
-          setallowed(false)
-        }
+    if(user) {
+      if(user.username === 'admin') {
+        navigate('/dash')
+        return;
       }
-      
-      setloading(false)
-    } catch (error) {
-      console.log("Failed ", error);
+      navigate('/user')
     }
-  }
-
-  function toRad(x) {
-      return (x * Math.PI) / 180;
-  }
-
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    lat1 = parseFloat(lat1);
-      lon1 = parseFloat(lon1);
-      lat2 = parseFloat(lat2);
-      lon2 = parseFloat(lon2);
-
-      const R = 6371e3; // metres
-      const φ1 = toRad(lat1);
-      const φ2 = toRad(lat2);
-      const Δφ = toRad(lat2 - lat1);
-      const Δλ = toRad(lon2 - lon1);
-
-      const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                Math.cos(φ1) * Math.cos(φ2) *
-                Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-      return R * c;
-  }
-
-  const counter = () => {
-    const timer = setInterval(() => {
-      setupdateIn(prev => {
-        if(prev === 0) {
-          return 5;
-        }
-        return prev - 1;
-      })
-    }, 1000);
-  }
-
-  const startTrack = () => {
-    counter()
-    navigator.geolocation.watchPosition(updatePostion, 
-  (err) => console.error(err), 
-  { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-);
-  }
-
-  const updatePostion = (position) => {
-    const accu = position.coords.accuracy
-    const leti = position.coords.latitude
-    const long = position.coords.longitude
-    const dis = calculateDistance(room.latitude, room.logitude, leti, long)
-    setDistance(dis)
-    settrack({
-      accurecy: accu,
-      logitude: long,
-      latitude: leti
-    })
-  }
-
-  const getPosition = (position) => {
-    setstatus({
-      type: 'bg-green-200',
-      msg: "User allowed to access GPS"
-    })
-    const accu = position.coords.accuracy
-    const leti = position.coords.latitude
-    const long = position.coords.longitude
-    setroom({
-      accurecy: accu,
-      logitude: long,
-      latitude: leti
-    })
-  }
-
-  const setRoomPosition = () => {
-    if (!navigator.geolocation.getCurrentPosition(getPosition)) {
-      setstatus({
-        type: "bg-red-200",
-        msg: "Wait...."
-      })
-      return;
-    }
-  }
+  }, [user])
+  
+  
 
   return (
-    <div className='min-h-screen'>
-      <div className='shadow-xl p-3 rounded-2xl shadow-gray-600'>
-        <h1>Live Gps Tracking</h1>
-        <div className={`flex my-3 ${status.type} p-3 rounded-2xl text-[13px]`}>
-          <p>Status:</p>
-          <p>{status.msg}</p>
-        </div>
-        <div className='flex gap-3 text-[10px]'>
-          <button onClick={setRoomPosition} className='bg-blue-400 p-3 rounded-2xl text-white'>click to set location of room</button>
-          <button onClick={startTrack} className='bg-blue-400 p-3 rounded-2xl text-white'>Click to Start Tracking</button>
-        </div>
-        <div className='my-3'>
-          <h3 className='text-xl'>Room data</h3>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Accurecy:</p>
-            <p>{room.accurecy}</p>
-          </div>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Longitude:</p>
-            <p>{room.logitude}</p>
-          </div>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Loatitude:</p>
-            <p>{room.latitude}</p>
-          </div>
-        </div>
-        <div className='my-5'>
-          <h3 className='text-2xl'>Live data Update In {updateIn}</h3>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Accurecy:</p>
-            <p>{track.accurecy}</p>
-          </div>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Longitude:</p>
-            <p>{track.logitude}</p>
-          </div>
-          <div className='flex justify-center my-2 gap-3'>
-            <p>Loatitude:</p>
-            <p>{track.latitude}</p>
-          </div>
-        </div>
-        <div className='flex justify-center my-5 text-xl'>
-          <p>Distance=</p>
-          <p>{distance}</p>
-          <p>meters</p>
-        </div>
-      <div>
-        <h2 className='text-xl'>Access to Website</h2>
-        {loading ? <p className='bg-yellow-300'>Loading...</p> : <></>}
-        {allowed ? <p className='bg-green-300'>Allowed</p> : <p className='bg-red-300'>Not Allowed</p>}
-      </div>
-      </div>
-    </div>
+    <header>
+      <SignedOut>
+        {/* <SignInButton /> */}
+      </SignedOut>
+      {/* <SignIn> */}
+        {/* <UserButton /> */}
+      {/* </SignIn> */}
+    </header>
   )
 }
 
