@@ -16,7 +16,7 @@ function App() {
         navigate('/dash')
         return;
       }
-      navigate('/user')
+      navigate(`/user/${user}`)
     }
   }
 

@@ -1,17 +1,36 @@
 import React, { useState } from 'react'
 import { Scanner } from '@yudiel/react-qr-scanner'
+import { useParams } from 'react-router-dom'
 
 const userInterface = () => {
     const [file, setfile] = useState(null)
     const [loading, setloading] = useState(false)
+    const { username } = useParams();
 
     const handleChange = async (data) => {
       console.dir(data[0].rawValue);
+      setloading("Loading...")
       if(data) {
-        setloading(data.sessionId)
-        return;
+        try {
+          const strRes = await fetch('https://localhost:3000/api/v1/qr/scan', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: data[0].rawValue, userId: username})
+          });
+
+          const res = await strRes.json();
+
+          if(!res.success) {
+            setloading("Failed to mark attandance")
+          }
+
+          setloading("Attendance Marked")
+        } catch (error) {
+          setloading("Err")
+        }
       }
-      setloading(data)
     }
 
     const error = (err) => {

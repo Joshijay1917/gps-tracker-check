@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />}/>
-        <Route path='/user' element={<UserInterface />}/>
+        <Route path='/user/:username' element={<UserInterface />}/>
         <Route path='/dash' element={<LiveGps />}/>
         <Route path='/qrcode' element={<QRCode />}/>
       </Routes>
