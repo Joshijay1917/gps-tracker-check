@@ -20,6 +20,8 @@ const userInterface = () => {
             body: JSON.stringify({ token: data[0].rawValue, userId: username})
           });
 
+          console.log("StrRes:", strRes);
+          
           const res = await strRes.json();
 
           if(!res.success) {
@@ -29,6 +31,8 @@ const userInterface = () => {
           setloading("Attendance Marked")
         } catch (error) {
           setloading("Err")
+          console.log("Err ", error);
+          
         }
       }
     }
