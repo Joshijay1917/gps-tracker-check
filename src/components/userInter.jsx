@@ -12,7 +12,7 @@ const userInterface = () => {
       setloading("Loading...")
       if(data) {
         try {
-          const strRes = await fetch('https://localhost:3000/api/v1/qr/scan', {
+          const strRes = await fetch('https://check-ip-test-backend.onrender.com/api/v1/qr/scan', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
