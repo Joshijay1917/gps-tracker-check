@@ -63,6 +63,7 @@ const userInterface = () => {
         <input id='fileInput' className='hidden' type="file" accept="image/*" capture="environment" /> */}
         <Scanner 
         onScan={handleChange}
+            onError={error}
         />
         {loading && <div className='bg-black/50 fixed left-0 top-0 w-full min-h-screen flex justify-center items-center text-white font-bold text-3xl'>
             <p>{loading}</p>
