@@ -21,7 +21,7 @@ const userInterface = () => {
       const res = await strRes.json()
 
       console.log("Res:", res);
-      if(res.success) {
+      if(res.success === true) {
           return true;
       }
 
