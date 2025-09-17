@@ -52,7 +52,7 @@ const QRCode = () => {
     return (
         <div>
             {counter && <p>{counter}</p>}
-            {token && <QRCodeSVG value={token} size={200} />}
+            {token && <QRCodeSVG value={"https://google.com"} size={200} />}
         </div>
     )
 }
