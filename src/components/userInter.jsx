@@ -7,15 +7,27 @@ const userInterface = () => {
     const [loading, setloading] = useState(false)
     const { username } = useParams();
 
-    const isTokenExpired = (token) => {
-  if (!token) return true;
+    const isTokenValid = (token) => {
+  if (!token) return false;
   
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const currentTime = Date.now() / 1000;
-    return payload.exp < currentTime;
+    const strRes = await fetch('https://check-ip-test-backend.onrender.com/api/v1/qr/scan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token: token, userId: username})
+    });
+      const res = await strRes.json()
+
+      console.log("Res:", res);
+      if(res.success) {
+          return true;
+      }
+
+      return false;
   } catch (error) {
-    return true;
+    return false;
   }
 };
 
@@ -39,7 +51,7 @@ const userInterface = () => {
          // if(!res.success) {
            // setloading("Failed to mark attandance")
         //  }
-          if(isTokenExpired(data[0].rawValue)) {
+          if(!isTokenValid(data[0].rawValue)) {
               setloading("Failed to mark Attendance");
               return;
           }
