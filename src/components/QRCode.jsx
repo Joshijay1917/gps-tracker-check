@@ -47,12 +47,15 @@ const QRCode = () => {
         //return () => ws.close();
     }, [])
 
+    useEffect(() => {
+        window.location.href = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${token}`
+    }, [token]);
+
     console.log("TOKEN=",token)
     
     return (
         <div>
             {counter && <p>{counter}</p>}
-            {token && window.location.href = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${token}`}
         </div>
     )
 }
