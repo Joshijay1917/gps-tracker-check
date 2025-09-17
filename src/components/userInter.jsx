@@ -7,7 +7,7 @@ const userInterface = () => {
     const [loading, setloading] = useState(false)
     const { username } = useParams();
 
-    const isTokenValid = (token) => {
+    const isTokenValid = async(token) => {
   if (!token) return false;
   
   try {
