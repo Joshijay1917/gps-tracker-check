@@ -21,7 +21,7 @@ const userInterface = () => {
       const res = await strRes.json()
 
       console.log("Res:", res);
-      if(res.success === true) {
+      if(res.success) {
           return true;
       }
 
@@ -51,7 +51,7 @@ const userInterface = () => {
          // if(!res.success) {
            // setloading("Failed to mark attandance")
         //  }
-          if(!isTokenValid(data[0].rawValue)) {
+          if(!(await isTokenValid(data[0].rawValue))) {
               console.log("Attendance Not marked")
               setloading("Failed to mark Attendance");
               return;
