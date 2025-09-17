@@ -11,7 +11,7 @@ const QRCode = () => {
             const strRes = await fetch('https://check-ip-test-backend.onrender.com/api/v1/qr/qr-code')
             const res = await strRes.json();
 
-            console.log("Res",res);
+            console.log("Res",res.token);
             settoken(res.token);
             //if(res.token) {
                 //settoken(res.token);
@@ -42,12 +42,13 @@ const QRCode = () => {
                 }
                 return (prev - 1);
             });
-            console.log("TOKEN=",token)
         }, 1000);
 
         //return () => ws.close();
     }, [])
 
+    console.log("TOKEN=",token)
+    
     return (
         <div>
             {counter && <p>{counter}</p>}
