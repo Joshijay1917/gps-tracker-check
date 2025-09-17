@@ -52,7 +52,6 @@ const QRCode = () => {
     return (
         <div>
             {counter && <p>{counter}</p>}
-{/*             {token && <QRCodeSVG value={"https://google.com"} size={200} />} */}
             {token && window.location.href = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${token}`}
         </div>
     )
