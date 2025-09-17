@@ -30,7 +30,10 @@ const QRCode = () => {
              // settoken(data.token);
             //}
          // };
-
+        generateToken();
+        setInterval(() => {
+            generateToken();
+        }, 20000);
         setInterval(() => {
             setcounter(prev => {
                 if(prev == 0) {
