@@ -6,17 +6,30 @@ const QRCode = () => {
     const [token, settoken] = useState(null)
     const [counter, setcounter] = useState(20)
 
-    useEffect(() => {
-        const ws = new WebSocket("wss://check-ip-test-backend.onrender.com");
+    const generateToken = async () => {
+        try {
+            const strRes = await fetch('https://check-ip-test-backend.onrender.com/api/v1/qr/qr-code')
+            const res = await strRes.json();
 
-        ws.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            console.log(data)
-            if (data.token) {
-                
-              settoken(data.token);
+            console.log("Res",res);
+            if(res.token) {
+                settoken(res.token);
             }
-          };
+        }catch(err){
+            console.log("err",err);
+        }
+    }
+    useEffect(() => {
+        //const ws = new WebSocket("wss://check-ip-test-backend.onrender.com");
+
+        //ws.onmessage = (event) => {
+            //const data = JSON.parse(event.data);
+            //console.log(data)
+            //if (data.token) {
+                
+             // settoken(data.token);
+            //}
+         // };
 
         setInterval(() => {
             setcounter(prev => {
