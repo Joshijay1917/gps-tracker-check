@@ -41,9 +41,10 @@ const QRCode = () => {
                 }
                 return (prev - 1);
             });
+            console.log("TOKEN="token)
         }, 1000);
 
-        return () => ws.close();
+        //return () => ws.close();
     }, [])
 
     return (
