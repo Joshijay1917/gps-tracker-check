@@ -52,6 +52,7 @@ const userInterface = () => {
            // setloading("Failed to mark attandance")
         //  }
           if(!isTokenValid(data[0].rawValue)) {
+              console.log("Attendance Not marked")
               setloading("Failed to mark Attendance");
               return;
           }
