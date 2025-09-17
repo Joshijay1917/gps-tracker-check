@@ -44,13 +44,14 @@ const userInterface = () => {
               return;
           }
           setloading("Attendance Marked")
-        } catch (error) {
-          setloading("Err")
-          console.log("Err ", error);
-          
+          } catch (error) {
+              setloading("Err")
+              console.log("Err ", error);
+          }
+        } else {
+            setloading("Data not found");
         }
     }
-      }
 
     const error = (err) => {
       setloading(err)
