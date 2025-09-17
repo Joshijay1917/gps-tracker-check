@@ -12,6 +12,7 @@ const QRCode = () => {
         ws.onmessage = (event) => {
             const data = JSON.parse(event.data);
             if (data.token) {
+                console.log(data.token)
               settoken(data.token);
             }
           };
