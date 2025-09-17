@@ -12,9 +12,10 @@ const QRCode = () => {
             const res = await strRes.json();
 
             console.log("Res",res);
-            if(res.token) {
-                settoken(res.token);
-            }
+            settoken(res.token);
+            //if(res.token) {
+                //settoken(res.token);
+            //}
         }catch(err){
             console.log("err",err);
         }
