@@ -23,7 +23,7 @@ const userInterface = () => {
       console.dir(data[0].rawValue);
       setloading("Loading...")
       if(data) {
-        //try {
+        try {
           //const strRes = await fetch('https://check-ip-test-backend.onrender.com/api/v1/qr/scan', {
             //method: 'POST',
            // headers: {
@@ -51,7 +51,6 @@ const userInterface = () => {
         }
     }
       }
-    }
 
     const error = (err) => {
       setloading(err)
